@@ -16,10 +16,14 @@ export function useSales(): UseSalesReturn {
 
   const fetchSales = async () => {
     try {
+      console.log('inicio peticion');
+      
       setLoading(true);
       setError(null);
       const data = await salesService.getSales();
       setSales(data);
+      console.log('fin peticion');
+      
     } catch (err) {
       const apiError = err as ApiError;
       setError(apiError.message || 'Error al cargar las ventas');
