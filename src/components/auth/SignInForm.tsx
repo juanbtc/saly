@@ -67,7 +67,7 @@ export default function SignInForm() {
 	}
 
 	const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault()
+		//e.preventDefault()
 		// setError("")
 		await handleLogin()
 	}
@@ -199,7 +199,12 @@ export default function SignInForm() {
 								<div>
 									<Button
 										className="w-full" size="sm"
-										onClick={() => onSubmit({} as React.MouseEvent<HTMLButtonElement>)}
+										onClick={(e:any) => {
+                                            e.preventDefault()
+                                            onSubmit({} as React.MouseEvent<HTMLButtonElement>
+
+                                            )}
+                                        }
 									>
 										Sign in
 									</Button>
