@@ -1,3 +1,4 @@
+import { URL_SERVER_OWN } from '@/lib/config';
 import { Product, ApiError } from '@/types/product';
 
 export class ProductService {
@@ -5,27 +6,34 @@ export class ProductService {
 
   async getProducts(): Promise<Product[]> {
     try {
+      /*
       const response = await fetch(`${this.baseUrl}/productos`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
       });
+      */
+
+      const response = await fetch(`${URL_SERVER_OWN}/api/proxy/productos`, {
+          credentials: 'include',
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
+      const xres = await response.json();
+      console.log("xres: ", xres);
       
       // Si la respuesta es un array directo, lo devolvemos
-      if (Array.isArray(data)) {
-        return data as Product[];
+      if (Array.isArray(xres)) {
+        return xres as Product[];
       }
       
       // Si la respuesta tiene una estructura con data, extraemos el array
-      if (data.data && Array.isArray(data.data)) {
-        return data.data as Product[];
+      if (xres.data && Array.isArray(xres.data)) {
+        return xres.data as Product[];
       }
       
       // Si no es ninguno de los casos anteriores, devolvemos array vacío
