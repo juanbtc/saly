@@ -199,7 +199,7 @@ export default function SignInForm() {
 								<div>
 									<Button
 										className="w-full" size="sm"
-										onClick={onSubmit}
+										onClick={() => onSubmit({} as React.MouseEvent<HTMLButtonElement>)}
 									>
 										Sign in
 									</Button>
