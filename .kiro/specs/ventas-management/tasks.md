@@ -12,7 +12,7 @@
   - [ ] 2.1 Create Sales TypeScript interfaces
     - Define Sale interface with all required fields
     - Create SaleProduct interface for product details
-    - Create API response type definitions
+    - Create API response type definitions including ApiSaleDetailResponse for nested backend structure
 
 
     - _Requirements: 1.1, 2.3_
@@ -20,10 +20,11 @@
   - [ ] 2.2 Implement SalesService API client
     - Create service class with getSales and getSale methods
     - Implement error handling and HTTP client logic
+    - Add data transformation method to map nested API response to flat Sale interface
 
 
     - Add proper TypeScript typing for API responses
-    - _Requirements: 1.2, 2.3, 3.1, 3.2_
+    - _Requirements: 1.2, 2.3, 2.6, 3.1, 3.2_
 
 
 
@@ -106,14 +107,41 @@
     - Add proper ARIA labels and keyboard navigation
     - _Requirements: 4.3, 4.5_
 
-- [ ]* 9. Add comprehensive testing
-  - [ ]* 9.1 Write unit tests for components
+- [x] 9. Update existing code to handle new API format
+
+
+  - [x] 9.1 Add API response interfaces for nested structure
+
+
+    - Create ApiSaleDetailResponse interface matching backend structure
+    - Add interfaces for venta, cliente, and detalle objects
+    - _Requirements: 2.3, 2.6_
+
+
+  
+  - [ ] 9.2 Implement data transformation in SalesService
+    - Create mapApiResponseToSale method to transform nested response
+    - Map venta object properties to Sale interface
+    - Map cliente object to Sale.cliente property
+
+
+    - Transform detalle array to Sale.productos array
+    - _Requirements: 2.3, 2.4, 2.6_
+  
+  - [ ] 9.3 Update API proxy route to handle new response format
+    - Modify the /api/proxy/ventas/[id]/route.ts to transform the response
+    - Ensure backward compatibility if needed
+    - _Requirements: 2.3, 2.6_
+
+- [ ]* 10. Add comprehensive testing
+  - [ ]* 10.1 Write unit tests for components
     - Test SalesTable component functionality
     - Test SalesDetail component rendering
     - Test custom hooks behavior
+    - Test data transformation logic
     - _Requirements: All_
   
-  - [ ]* 9.2 Write integration tests
+  - [ ]* 10.2 Write integration tests
     - Test navigation flow between list and detail
     - Test API integration with mock data
     - Test error handling scenarios

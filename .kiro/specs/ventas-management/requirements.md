@@ -34,9 +34,10 @@ This feature implements a comprehensive sales management system for the TailAdmi
 
 1. THE Sales_Table SHALL include a "Ver" (View) button for each sale row
 2. WHEN the user clicks the "Ver" button, THE Navigation_System SHALL navigate to the sale detail page
-3. THE Sales_Detail_View SHALL consume data from the endpoint "http://localhost:3000/ventas/{id}"
-4. THE Sales_Detail_View SHALL display all available sale information in a readable format
+3. THE Sales_Detail_View SHALL consume data from the endpoint "http://localhost:3000/ventas/{id}" which returns a nested structure with venta, cliente, and detalle objects
+4. THE Sales_Detail_View SHALL display all available sale information including transaction details, customer information, and product details in a readable format
 5. THE Sales_Detail_View SHALL include a back button to return to the sales list
+6. THE Sales_Detail_View SHALL properly map the nested API response structure to the internal Sale interface
 
 ### Requirement 3
 

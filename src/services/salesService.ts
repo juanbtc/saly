@@ -1,4 +1,4 @@
-import { Sale, ApiError } from '@/types/sales';
+import { Sale, ApiError, ApiSaleDetailResponse, SaleProduct } from '@/types/sales';
 import { URL_SERVER_OWN } from '@/lib/config';
 
 export class SalesService {
@@ -46,6 +46,11 @@ export class SalesService {
 
 			const data = await response.json();
 
+			// Check if response has nested structure (venta, cliente, detalle)
+			if (data && data.data && data.data.venta && data.data.cliente && data.data.detalle) {
+				return this.mapApiResponseToSale(data.data);
+			}
+
 			// Si la respuesta es un objeto directo, lo devolvemos
 			if (data && typeof data === 'object' && !Array.isArray(data)) {
 				// Si tiene una estructura con data, extraemos el objeto
@@ -60,6 +65,45 @@ export class SalesService {
 		} catch (error) {
 			throw this.handleApiError(error);
 		}
+	}
+
+	private mapApiResponseToSale(apiResponse: ApiSaleDetailResponse): Sale {
+		const { venta, cliente, detalle } = apiResponse;
+
+		// Map estado number to string
+		const estadoMap: { [key: number]: string } = {
+			0: 'pendiente',
+			1: 'completada',
+			2: 'cancelada',
+		};
+
+		// Transform detalle array to productos
+		const productos: SaleProduct[] = detalle.map((item) => ({
+			codmat: item.codmat,
+			nombre: item.producto,
+			cantidad: item.cantidad,
+			precio: item.precio,
+			subtotal: item.importe_acumulado,
+		}));
+
+		// Calculate total discount from detalle
+		const totalDescuento = detalle.reduce((sum, item) => sum + item.oferta_acumulada, 0);
+
+		return {
+			id: venta.id,
+			fecha: venta.createdAt,
+			cliente: cliente.name,
+			total: venta.total,
+			estado: estadoMap[venta.estado] || 'pendiente',
+			metodoPago: venta.tipotran,
+			productos,
+			descuento: totalDescuento,
+			impuestos: 0, // Not provided in API
+			vendedor: venta.usuario_cod,
+			notas: venta.observaciones,
+			fechaCreacion: venta.createdAt,
+			fechaModificacion: venta.updatedAt,
+		};
 	}
 
 	private handleApiError(error: unknown): ApiError {

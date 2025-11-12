@@ -96,8 +96,63 @@ class SalesService {
   async getSales(): Promise<Sale[]>
   async getSale(id: string | number): Promise<Sale>
   private handleApiError(error: any): never
+  private mapApiResponseToSale(apiResponse: ApiSaleDetailResponse): Sale
 }
 ```
+
+### API Response Structure
+
+The backend returns a nested structure for sale details:
+
+```typescript
+interface ApiSaleDetailResponse {
+  venta: {
+    id: number;
+    nrotran: number;
+    tipotran: string;
+    observaciones: string;
+    total: number;
+    estado: number;
+    nulo: string | null;
+    price_mod: number;
+    codcam: string | null;
+    rcod: string;
+    rdays: number;
+    roff: number;
+    rpts_used: number;
+    lat: number;
+    lng: number;
+    createdAt: string;
+    updatedAt: string;
+    usuario_cod: string;
+    cliente_cod: string;
+    prom_cod: string | null;
+  };
+  cliente: {
+    codcli: string;
+    name: string;
+    direccion: string | null;
+    zona: string;
+    estado: boolean;
+    // ... other customer fields
+  };
+  detalle: Array<{
+    id: number;
+    notaventa_id: number;
+    precio: number;
+    precio_desc: number | null;
+    cantidad: number;
+    oferta: number;
+    oferta_acumulada: number;
+    importe_acumulado: number;
+    codmat: string;
+    producto: string;
+    // ... other detail fields
+  }>;
+}
+```
+
+The service layer must transform this nested structure into the flat Sale interface used by the frontend components.
 
 ## Data Models
 
@@ -119,7 +174,28 @@ class SalesService {
 ### API Response Models
 - **SalesListResponse**: Array of Sale objects
 - **SalesDetailResponse**: Single Sale object
+- **ApiSaleDetailResponse**: Nested backend response structure with venta, cliente, and detalle
 - **ErrorResponse**: Standardized error format
+
+### Data Transformation
+The API returns a nested structure that must be transformed:
+- `venta` object → Sale base properties (id, total, estado, observaciones, etc.)
+- `cliente` object → Sale.cliente property (customer name)
+- `detalle` array → Sale.productos array (mapped to SaleProduct interface)
+
+Mapping rules:
+- `venta.id` → `Sale.id`
+- `venta.total` → `Sale.total`
+- `venta.observaciones` → `Sale.notas`
+- `venta.createdAt` → `Sale.fechaCreacion`
+- `venta.updatedAt` → `Sale.fechaModificacion`
+- `venta.usuario_cod` → `Sale.vendedor`
+- `cliente.name` → `Sale.cliente`
+- `detalle[].codmat` → `SaleProduct.codmat`
+- `detalle[].producto` → `SaleProduct.nombre`
+- `detalle[].cantidad` → `SaleProduct.cantidad`
+- `detalle[].precio` → `SaleProduct.precio`
+- `detalle[].importe_acumulado` → `SaleProduct.subtotal`
 
 ## Error Handling
 
