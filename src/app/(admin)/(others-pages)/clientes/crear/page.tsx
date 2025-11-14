@@ -15,8 +15,13 @@ export default function CrearClientePage() {
 		try {
 			setLoading(true);
 			setError(null);
-			await clientesService.createCliente(data);
-			router.push('/clientes');
+			const res = await clientesService.createCliente(data);
+			
+			console.log('respuesta crear cliente: ', res);
+			
+			
+			setLoading(false);
+			//router.push('/clientes');
 		} catch (err) {
 			const error = err as { message?: string };
 			setError(error.message || 'Error al crear el cliente');

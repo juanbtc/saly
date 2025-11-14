@@ -44,6 +44,9 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		console.log('cliente a enviar: ', formData);
+		console.log('tipo a enviar: ', typeof(formData));
+		
 		await onSubmit(formData);
 	};
 

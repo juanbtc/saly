@@ -2,10 +2,11 @@ export interface Cliente {
   codcli: string;
   name: string;
   direccion: string | null;
-  zona: string;
-  estado: boolean;
+  zona: string | null;
+  estado: number | boolean;
   lat: number | null;
   lng: number | null;
+  ciudad_id: number;
   conDocumentacion: boolean;
   visitado: boolean;
   nit: string | null;
@@ -18,6 +19,7 @@ export interface Cliente {
   telefono2: string | null;
   fechaVisita: string | null;
   razonSocial: string | null;
+  //razon_social: string | null;
   documentacionCompleta: boolean;
   observaciones: string | null;
   correo: string | null;

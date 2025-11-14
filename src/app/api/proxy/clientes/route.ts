@@ -30,6 +30,8 @@ export async function GET() {
 
 //CREAR CLIENTE
 export async function POST(request: Request) {
+	console.log('creanmdo cliente obteniendo cookies');
+	
 	const cookieStore = await cookies();
 	const token = cookieStore.get('token')?.value;
 
@@ -37,9 +39,12 @@ export async function POST(request: Request) {
 		return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
 	}
 
-	const body = await request.json();
 
-	const res = await fetch(`${env.URL_SERVER_VENTAS}/clientes`, {
+	const body = await request.json();
+	console.log('body: ',body);
+	
+
+	const res = await fetch(`${env.URL_SERVER_VENTAS}/v2/clientes`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -48,14 +53,20 @@ export async function POST(request: Request) {
 		body: JSON.stringify(body),
 	});
 
+	const bd = await res.json().catch(() => ({ error: 'Error al crear cliente' }))
+	console.log('res: ',res);
+	console.log('res body: ',bd);
+
+	
+
 	if (!res.ok) {
-		const errorData = await res.json().catch(() => ({ error: 'Error al crear cliente' }));
+		const errorData = bd;
 		return NextResponse.json(
 			{ error: errorData.error || 'Error al crear cliente' },
 			{ status: res.status }
 		);
 	}
 
-	const data = await res.json();
+	const data = bd;
 	return NextResponse.json(data);
 }
