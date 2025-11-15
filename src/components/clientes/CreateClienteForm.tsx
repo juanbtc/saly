@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { CreateClienteData } from '@/services/clientesService';
 import { useClientes } from '@/hooks/useClientes';
 import InputCodcli from './InputCodcli';
+import InputDescrip from './InputDescrip';
 
 interface CreateClienteFormProps {
 	onSubmit: (data: CreateClienteData) => Promise<void>;
@@ -39,7 +40,10 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
-		setFormData(prev => ({ ...prev, [name]: value }));
+
+		console.log('handleChange: ', name, value.toUpperCase());
+		
+		setFormData(prev => ({ ...prev, [name]: value.toUpperCase() }));
 	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
@@ -102,7 +106,12 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 							className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white px-4 py-2"
 						/>
 					</div> */}
-					<div>
+					<InputDescrip
+						clientes={uClientes.clientes}
+						value={formData.name}
+						onChange={handleChange}
+					/>
+					{/* <div>
 						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
 							Nombre <span className="text-red-500">*</span>
 						</label>
@@ -114,7 +123,7 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 							required
 							className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white px-4 py-2"
 						/>
-					</div>
+					</div> */}
 					<div>
 						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
 							Zona <span className="text-red-500">*</span>
