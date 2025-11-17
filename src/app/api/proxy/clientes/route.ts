@@ -40,8 +40,8 @@ export async function POST(request: Request) {
 	}
 
 
-	const body = await request.json();
-	console.log('body: ',body);
+	const bd = await request.json();
+	console.log('body: ',bd);
 	
 
 	const res = await fetch(`${env.URL_SERVER_VENTAS}/v2/clientes`, {
@@ -50,12 +50,28 @@ export async function POST(request: Request) {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${token}`,
 		},
-		body: JSON.stringify(body),
+		body: JSON.stringify(bd),
 	});
 
-	const bd = await res.json().catch(() => ({ error: 'Error al crear cliente' }))
+	console.log('*****************************************************');
+	
 	console.log('res: ',res);
-	console.log('res body: ',bd);
+	const status = res.status;
+	const statusText = res.statusText;
+	const bodyUsed = res.bodyUsed;
+	const headers = res.headers;
+	const ok = res.ok;
+	const body = await res.json().catch(() => ({ error: 'Error al crear cliente' }))
+
+	const respuesta = {
+		status,
+		statusText,
+		bodyUsed,
+		headers,
+		ok,
+		body
+	}
+	console.log('res body: ',respuesta);
 
 	
 
@@ -67,6 +83,11 @@ export async function POST(request: Request) {
 		);
 	}
 
-	const data = bd;
-	return NextResponse.json(data);
+	// const data = bd;
+	return NextResponse.json({
+		msg: "Cliente creado exitosamente",
+		respuesta
+	}
+
+	);
 }
