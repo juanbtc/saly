@@ -22,7 +22,7 @@ export default function InputCodcli(
 	)
 
 	return (
-			<div className="relative w-full max-w-md">
+			<div>
 				{/* <input
 					type="text"
 					className="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"

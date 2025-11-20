@@ -5,6 +5,7 @@ import { CreateClienteData } from '@/services/clientesService';
 import { useClientes } from '@/hooks/useClientes';
 import InputCodcli from './InputCodcli';
 import InputDescrip from './InputDescrip';
+import Select from 'react-select'
 
 interface CreateClienteFormProps {
 	onSubmit: (data: CreateClienteData) => Promise<void>;
@@ -37,6 +38,12 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 		fechaAniversario: '',
 		observaciones: '',
 	});
+
+	const options = [
+		{ value: 'chocolate', label: 'Chocolate' },
+		{ value: 'strawberry', label: 'Strawberry' },
+		{ value: 'vanilla', label: 'Vanilla' }
+	]
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
@@ -128,14 +135,15 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
 							Zona <span className="text-red-500">*</span>
 						</label>
-						<input
+						<Select options={options} />
+						{/* <input
 							type="text"
 							name="zona"
 							value={formData.zona}
 							onChange={handleChange}
 							required
 							className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white px-4 py-2"
-						/>
+						/> */}
 					</div>
 					<div>
 						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">

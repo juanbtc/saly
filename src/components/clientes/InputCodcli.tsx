@@ -21,8 +21,9 @@ export default function InputCodcli(
 		c.codcli.toLowerCase().startsWith(query.toLowerCase())
 	)
 
+	{/* <div className="relative w-full max-w-md"> */}
 	return (
-			<div className="relative w-full max-w-md">
+			<div>
 				{/* <input
 					type="text"
 					className="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
