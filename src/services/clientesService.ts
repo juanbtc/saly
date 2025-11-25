@@ -24,7 +24,7 @@ export interface CreateClienteData {
 export class ClientesService {
 	async getClientes(): Promise<Cliente[]> {
 		try {
-			const response = await fetch(`${URL_SERVER_OWN}/api/proxy/clientes`, {
+			const response = await fetch(`/api/proxy/clientes`, {
 				credentials: 'include',
 			});
 
@@ -43,7 +43,8 @@ export class ClientesService {
 			}
 
 			return [];
-		} catch (error) {
+		} catch (error:any) {
+			console.log('catch : ', error.message);
 			throw this.handleApiError(error);
 		}
 	}

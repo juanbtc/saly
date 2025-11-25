@@ -20,6 +20,9 @@ export function useClientes(): UseClientesReturn {
 			setError(null);
 			const data = await clientesService.getClientes();
 			const data_ordenada = data.sort((a, b) => a.codcli.localeCompare(b.codcli))
+
+			console.log('data ordenada: ', data_ordenada);
+			
 			setClientes(data_ordenada);
 		} catch (err) {
 			const apiError = err as ApiError;

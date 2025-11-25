@@ -4,6 +4,8 @@ import { env } from '@/lib/enviroment';
 
 //OBTENER CLIENTES
 export async function GET() {
+	console.log('obtener lista de clientes');
+	
 	const cookieStore = await cookies();
 	const token = cookieStore.get('token')?.value;
 
@@ -16,6 +18,8 @@ export async function GET() {
 			Authorization: `Bearer ${token}`,
 		},
 	});
+	console.log('res: ', res);
+	
 
 	if (!res.ok) {
 		return NextResponse.json(
@@ -25,6 +29,8 @@ export async function GET() {
 	}
 
 	const data = await res.json();
+	console.log('data: ', data);
+
 	return NextResponse.json(data);
 }
 
