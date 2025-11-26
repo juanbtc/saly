@@ -1,3 +1,4 @@
+import { env } from "@/lib/enviroment";
 import { NextResponse } from "next/server"
 
 export async function POST(request: Request) {
@@ -6,7 +7,7 @@ export async function POST(request: Request) {
 	try {
 		const body = await request.json()
 
-		const res = await fetch("http://localhost:3000/login", {
+		const res = await fetch(`${env.URL_SERVER_VENTAS}/login`, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(body),

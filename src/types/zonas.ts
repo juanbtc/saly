@@ -1,0 +1,44 @@
+import { z } from 'zod';
+export interface Zona {
+  codcli: string;
+  name: string;
+  direccion: string | null;
+  zona: string | null;
+  estado: number | boolean;
+  lat: number | null;
+  lng: number | null;
+  ciudad_id: number;
+  conDocumentacion: boolean;
+  visitado: boolean;
+  nit: string | null;
+  contacto: string | null;
+  fechaCumple1: string | null;
+  contacto2: string | null;
+  fechaCumple2: string | null;
+  fechaAniversario: string | null;
+  telefono: string | null;
+  telefono2: string | null;
+  fechaVisita: string | null;
+  razonSocial: string | null;
+  //razon_social: string | null;
+  documentacionCompleta: boolean;
+  observaciones: string | null;
+  correo: string | null;
+  correoContacto1: string | null;
+  correoContacto2: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ClientesTableProps {
+  zonas: Zona[];
+  loading: boolean;
+  error: string | null;
+  onViewCliente: (codcli: string) => void;
+}
+
+export interface ApiError {
+  message: string;
+  status?: number;
+  code?: string;
+}

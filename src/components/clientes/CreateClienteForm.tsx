@@ -6,6 +6,7 @@ import { useClientes } from '@/hooks/useClientes';
 import InputCodcli from './InputCodcli';
 import InputDescrip from './InputDescrip';
 import Select from 'react-select'
+import { useZonas } from '@/hooks/useZonas';
 
 interface CreateClienteFormProps {
 	onSubmit: (data: CreateClienteData) => Promise<void>;
@@ -18,7 +19,7 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 
 	// const { clientes, clloading, clerror } = useClientes();
 	const uClientes = useClientes();
-
+    const list_zonas = useZonas();
 	const [formData, setFormData] = useState<CreateClienteData>({
 		codcli: '',
 		name: '',
@@ -135,7 +136,7 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
 							Zona <span className="text-red-500">*</span>
 						</label>
-						<Select options={options} />
+						<Select options={list_zonas.zonas} />
 						{/* <input
 							type="text"
 							name="zona"
