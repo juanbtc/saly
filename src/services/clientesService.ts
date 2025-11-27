@@ -20,6 +20,7 @@ export interface CreateClienteData {
 	fechaCumple2?: string;
 	fechaAniversario?: string;
 	observaciones?: string;
+	promotor: string
 }
 
 export class ClientesService {

@@ -4,6 +4,7 @@ export interface SaleProduct {
   cantidad: number;
   precio: number;
   subtotal: number;
+  label:string;
 }
 
 export interface Sale {

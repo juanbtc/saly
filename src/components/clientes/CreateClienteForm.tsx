@@ -7,6 +7,7 @@ import InputCodcli from './InputCodcli';
 import InputDescrip from './InputDescrip';
 import Select from 'react-select'
 import { useZonas } from '@/hooks/useZonas';
+import { usePromotores } from '@/hooks/usePromotores';
 
 interface CreateClienteFormProps {
 	onSubmit: (data: CreateClienteData) => Promise<void>;
@@ -20,6 +21,7 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 	// const { clientes, clloading, clerror } = useClientes();
 	const uClientes = useClientes();
 	const list_zonas = useZonas();
+	const list_promotores = usePromotores();
 	const [formData, setFormData] = useState<CreateClienteData>({
 		codcli: '',
 		name: '',
@@ -39,6 +41,7 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 		fechaAniversario: '',
 		observaciones: '',
 		ciudad: 0,
+		promotor: ''
 	});
 
 	const ciudad = [
@@ -74,6 +77,12 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 		}));
 	};
 
+	const handlePromotorChange = (selectedOption: { value: string; label: string } | null) => {
+		setFormData(prev => ({
+			...prev,
+			promotor: selectedOption?.value || ''
+		}));
+	};
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		console.log('cliente a enviar: ', formData);
@@ -195,6 +204,36 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 							placeholder="Seleccione una ciudad"
 							isClearable
 						/>
+					</div>
+					<div>
+						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+							Promotor <span className="text-red-500">*</span>
+						</label>
+						<Select
+							options={list_promotores.promotores.map(promotor => ({
+								value: promotor.codigo,
+								label: `${promotor.codigo} - ${promotor.nombre}`
+							}))}
+							onChange={handlePromotorChange}
+							value={{
+								value: formData.promotor,
+								label: list_promotores.promotores.find(z => z.codigo === formData.promotor)?.label || 'Seleccione un promotor'
+							}}
+							isLoading={list_promotores.loading}
+							isDisabled={list_promotores.loading}
+							className="w-full text-gray-900"
+							classNamePrefix="select"
+							placeholder="Seleccione un promotor"
+						/>
+						{/* <input
+							type="text"
+							name="zona"
+							value={formData.zona}
+							onChange={handleChange}
+							required
+							className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white px-4 py-2"
+						/> */}
+
 					</div>
 
 					{/* <div>
