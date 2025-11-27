@@ -6,7 +6,7 @@ export interface CreateClienteData {
 	name: string;
 	direccion?: string;
 	zona: string;
-	label:string;
+	ciudad: number;
 	nit?: string;
 	razonSocial?: string;
 	telefono?: string;

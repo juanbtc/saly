@@ -38,8 +38,14 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 		fechaCumple2: '',
 		fechaAniversario: '',
 		observaciones: '',
-		label: ''
+		ciudad: 0,
 	});
+
+	const ciudad = [
+		{ value: 1, label: 'Santa Cruz' },
+		{ value: 2, label: 'Cochabamba' },
+		{ value: 3, label: 'La Paz' }
+	]
 
 	const options = [
 		{ value: 'chocolate', label: 'Chocolate' },
@@ -61,7 +67,12 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 			zona: selectedOption?.value || ''
 		}));
 	};
-
+	const handleCiudadChange = (selectedOption: { value: number; label: string } | null) => {
+		setFormData(prev => ({
+			...prev,
+			ciudad: selectedOption?.value || 0
+		}));
+	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -152,9 +163,9 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 							}))}
 							onChange={handleZonaChange}
 							value={{
-    value: formData.zona,
-    label: list_zonas.zonas.find(z => z.codigo === formData.zona)?.label || 'Seleccione una zona'
-}}
+								value: formData.zona,
+								label: list_zonas.zonas.find(z => z.codigo === formData.zona)?.label || 'Seleccione una zona'
+							}}
 							isLoading={list_zonas.loading}
 							isDisabled={list_zonas.loading}
 							className="w-full text-gray-900" // Asegura que el texto sea visible en modo oscuro
@@ -170,6 +181,20 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 							className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white px-4 py-2"
 						/> */}
 
+					</div>
+					<div>
+						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+							Ciudad <span className="text-red-500">*</span>
+						</label>
+						<Select
+							options={ciudad}
+							onChange={handleCiudadChange}
+							value={ciudad.find(c => c.value === formData.ciudad) || null}
+							className="w-full"
+							classNamePrefix="select"
+							placeholder="Seleccione una ciudad"
+							isClearable
+						/>
 					</div>
 
 					{/* <div>
