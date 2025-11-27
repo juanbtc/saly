@@ -152,9 +152,9 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 							}))}
 							onChange={handleZonaChange}
 							value={{
-								value: formData.zona,
-								label: 'label'
-							}}
+    value: formData.zona,
+    label: list_zonas.zonas.find(z => z.codigo === formData.zona)?.label || 'Seleccione una zona'
+}}
 							isLoading={list_zonas.loading}
 							isDisabled={list_zonas.loading}
 							className="w-full text-gray-900" // Asegura que el texto sea visible en modo oscuro

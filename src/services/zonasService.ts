@@ -2,13 +2,10 @@ import { Cliente, ApiError } from '@/types/clientes';
 import { URL_SERVER_OWN } from '@/lib/config';
 import { Zona } from '@/types/zonas';
 
-export interface ZonaData {
-    codigo: string;
-    nombre: string;
-}
+
 
 export class ZonasService {
-    async getZonas(): Promise<ZonaData[]> {
+    async getZonas(): Promise<Zona[]> {
         try {
             const response = await fetch(`/api/proxy/zonas`, {
                 credentials: 'include',
@@ -21,11 +18,11 @@ export class ZonasService {
             const data = await response.json();
             
             if (Array.isArray(data)) {
-                return data as ZonaData[];
+                return data as Zona[];
             }
 
             if (data.data && Array.isArray(data.data)) {
-                return data.data as ZonaData[];
+                return data.data as Zona[];
             }
 
             return [];

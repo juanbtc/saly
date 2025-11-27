@@ -32,7 +32,7 @@ export async function GET() {
 
 	const data = await res.json();
 	data.data.forEach((zona:any) => {
-		zona.Label=`${zona.codigo} - ${zona.nombre}`;
+		zona.label=`${zona.codigo} - ${zona.nombre}`;
 	});
 	console.log('data: ', data);
 
