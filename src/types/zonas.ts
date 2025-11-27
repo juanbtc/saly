@@ -2,7 +2,7 @@ import { z } from 'zod';
 export interface Zona {
   codigo: string;
   nombre: string;
-
+  label: string;
 }
 
 export interface ClientesTableProps {

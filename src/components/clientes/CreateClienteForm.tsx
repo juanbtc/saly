@@ -38,6 +38,7 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 		fechaCumple2: '',
 		fechaAniversario: '',
 		observaciones: '',
+		label: ''
 	});
 
 	const options = [
@@ -53,13 +54,13 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 
 		setFormData(prev => ({ ...prev, [name]: value.toUpperCase() }));
 	};
-	
+
 	const handleZonaChange = (selectedOption: any) => {
-    setFormData(prev => ({ 
-        ...prev, 
-        zona: selectedOption?.value || '' 
-    }));
-};
+		setFormData(prev => ({
+			...prev,
+			zona: selectedOption?.value || ''
+		}));
+	};
 
 
 	const handleSubmit = async (e: React.FormEvent) => {
@@ -144,7 +145,22 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
 							Zona <span className="text-red-500">*</span>
 						</label>
-						<Select options={list_zonas.zonas} />
+						<Select
+							options={list_zonas.zonas.map(zona => ({
+								value: zona.codigo,
+								label: zona.nombre
+							}))}
+							onChange={handleZonaChange}
+							value={{
+								value: formData.zona,
+								label: 'label'
+							}}
+							isLoading={list_zonas.loading}
+							isDisabled={list_zonas.loading}
+							className="w-full text-gray-900" // Asegura que el texto sea visible en modo oscuro
+							classNamePrefix="select"
+							placeholder="Seleccione una zona"
+						/>
 						{/* <input
 							type="text"
 							name="zona"
@@ -155,7 +171,7 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 						/> */}
 
 					</div>
-					
+
 					{/* <div>
 						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
 							Zona <span className="text-red-500">*</span>
