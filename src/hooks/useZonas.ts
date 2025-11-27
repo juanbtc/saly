@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Zona, ApiError } from '@/types/zonas';
-//import { zonasService } from '@/services/zonasService';
 import { zonasService } from '@/services/zonasService';
 
 interface UseZonasReturn {
@@ -20,14 +19,14 @@ export function useZonas(): UseZonasReturn {
             setLoading(true);
             setError(null);
             const data = await zonasService.getZonas();
-            const data_ordenada = data.sort((a, b) => a.codcli.localeCompare(b.codcli))
+            const data_ordenada = data.sort((a, b) => a.codigo.localeCompare(b.codigo))
 
             console.log('data ordenada: ', data_ordenada);
             
             setZonas(data_ordenada);
         } catch (err) {
             const apiError = err as ApiError;
-            setError(apiError.message || 'Error al cargar los clientes');
+            setError(apiError.message || 'Error al cargar las zonas');
             setZonas([]);
         } finally {
             setLoading(false);

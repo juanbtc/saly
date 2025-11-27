@@ -79,7 +79,7 @@ export class ClientesService {
 
 	async createCliente(data: CreateClienteData): Promise<Cliente> {
 		try {
-			const response = await fetch(`${URL_SERVER_OWN}/api/proxy/clientes`, {
+			const response = await fetch(`/api/proxy/clientes`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

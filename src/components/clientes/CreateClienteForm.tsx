@@ -19,7 +19,7 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 
 	// const { clientes, clloading, clerror } = useClientes();
 	const uClientes = useClientes();
-    const list_zonas = useZonas();
+	const list_zonas = useZonas();
 	const [formData, setFormData] = useState<CreateClienteData>({
 		codcli: '',
 		name: '',
@@ -50,15 +50,23 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 		const { name, value } = e.target;
 
 		console.log('handleChange: ', name, value.toUpperCase());
-		
+
 		setFormData(prev => ({ ...prev, [name]: value.toUpperCase() }));
 	};
+	
+	const handleZonaChange = (selectedOption: any) => {
+    setFormData(prev => ({ 
+        ...prev, 
+        zona: selectedOption?.value || '' 
+    }));
+};
+
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		console.log('cliente a enviar: ', formData);
-		console.log('tipo a enviar: ', typeof(formData));
-		
+		console.log('tipo a enviar: ', typeof (formData));
+
 		await onSubmit(formData);
 	};
 
@@ -81,7 +89,7 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 
 
 			{/* componente extra */}
-			
+
 
 			<div className="bg-white shadow-sm ring-1 ring-gray-900/5 rounded-lg p-6 dark:bg-gray-800 dark:ring-white/10">
 				<h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
@@ -89,17 +97,17 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 				</h2>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-					<InputCodcli 
+					<InputCodcli
 						clientes={uClientes.clientes}
 						value={formData.codcli}
 						onChange={handleChange}
-						// onChange={ (v: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=> {
-						// 	console.log('valor v:', v.target.name);
-						// 	console.log('valor v:', v.target.value);
-							
-						// 	//setFormData(prev => ({ ...prev, [name]: value }));
-						// }
-						// }
+					// onChange={ (v: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=> {
+					// 	console.log('valor v:', v.target.name);
+					// 	console.log('valor v:', v.target.value);
+
+					// 	//setFormData(prev => ({ ...prev, [name]: value }));
+					// }
+					// }
 					/>
 					{/* <div>
 						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -145,7 +153,16 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 							required
 							className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white px-4 py-2"
 						/> */}
+
 					</div>
+					
+					{/* <div>
+						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+							Zona <span className="text-red-500">*</span>
+						</label>
+						<Select options={list_zonas.zonas} />
+					</div> */}
+
 					<div>
 						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
 							Dirección
