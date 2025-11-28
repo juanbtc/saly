@@ -59,9 +59,15 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
 
-		console.log('handleChange: ', name, value.toUpperCase());
+		let valor = value.trim();
 
-		setFormData(prev => ({ ...prev, [name]: value.toUpperCase() }));
+		if (name === 'codcli' || name === 'name') {
+			valor = value.toUpperCase();
+		}
+
+		// console.log('handleChange: ', name, value.toUpperCase());
+
+		setFormData(prev => ({ ...prev, [name]: valor }));
 	};
 
 	const handleZonaChange = (selectedOption: any) => {
@@ -168,7 +174,7 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 						<Select
 							options={list_zonas.zonas.map(zona => ({
 								value: zona.codigo,
-								label: zona.nombre
+								label: zona.codigo + ' - ' + zona.nombre
 							}))}
 							onChange={handleZonaChange}
 							value={{
