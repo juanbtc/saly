@@ -59,10 +59,10 @@ export default function CreateClienteForm({ onSubmit, onCancel, loading, error }
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
 
-		let valor = value.trim();
+		let valor = value;
 
 		if (name === 'codcli' || name === 'name') {
-			valor = value.toUpperCase();
+			valor = valor.toUpperCase();
 		}
 
 		// console.log('handleChange: ', name, value.toUpperCase());
