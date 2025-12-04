@@ -79,7 +79,7 @@ export class ClientesService {
 		}
 	}
 
-	async createCliente(data: CreateClienteData): Promise<Cliente> {
+	async createCliente(data: CreateClienteData): Promise<any> {
 		try {
 			const response = await fetch(`/api/proxy/clientes`, {
 				method: 'POST',
@@ -98,10 +98,16 @@ export class ClientesService {
 			const result = await response.json();
 
 			if (result.data && typeof result.data === 'object') {
-				return result.data as Cliente;
+				return result.data;
 			}
 
-			return result as Cliente;
+			return {
+				msg: result.msg,
+				data: result.data,
+				ok: response.ok,
+				status: response.status,
+				statusText: response.status,
+			};
 		} catch (error) {
 			throw this.handleApiError(error);
 		}

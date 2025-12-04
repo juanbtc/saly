@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { clientesService, CreateClienteData } from '@/services/clientesService';
 import CreateClienteForm from '@/components/clientes/CreateClienteForm';
 import PageBreadcrumb from '@/components/common/PageBreadCrumb';
+import { showToast } from 'nextjs-toast-notify';
 
 export default function CrearClientePage() {
 	const router = useRouter();
@@ -18,7 +19,57 @@ export default function CrearClientePage() {
 			const res = await clientesService.createCliente(data);
 			
 			console.log('respuesta crear cliente: ', res);
+
+			if (res.ok) {
+				// setLoading(false);
+				showToast.success(res.msg,{
+					duration: 4000,
+                    progress: true,
+					position: 'top-right',
+                    transition: "bounceIn",
+                    icon: '',
+                    sound: true,
+				})
+				// router.push('/clientes');
+			} else {
+				showToast.error(res.msg,{
+					duration: 4000,
+					progress: true,
+					position: 'top-right',
+					transition: "bounceIn",
+					icon: '',
+					sound: true,
+				})
+			}
+
+			const res2 = res.data
+			if (res2.ok) {
+				showToast.success(res2.msg, {
+					duration: 4000,
+					progress: true,
+					position: 'top-right',
+					transition: "bounceIn",
+					icon: '',
+					sound: true,
+				})
+			} else {
+				showToast.error(res2.msg, {
+					duration: 4000,
+					progress: true,
+					position: 'top-right',
+					transition: "bounceIn",
+					icon: '',
+					sound: true,
+				})
+			}
+
+
+
 			
+			// if (res.success) {
+			// 	setLoading(false);
+			// 	router.push('/clientes');
+			// }
 			
 			setLoading(false);
 			//router.push('/clientes');
