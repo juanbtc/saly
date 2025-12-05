@@ -92,7 +92,8 @@ export async function POST(request: Request) {
 	// const data = bd;
 	return NextResponse.json({
 		msg: "Cliente creado exitosamente",
-		respuesta
+		data: respuesta
+		
 	}
 
 	);
