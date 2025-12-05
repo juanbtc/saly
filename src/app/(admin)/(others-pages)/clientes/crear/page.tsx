@@ -19,6 +19,7 @@ export default function CrearClientePage() {
 			const res = await clientesService.createCliente(data);
 			
 			console.log('respuesta crear cliente: ', res);
+			// const resapp = res.body
 
 			if (res.ok) {
 				// setLoading(false);
@@ -42,9 +43,9 @@ export default function CrearClientePage() {
 				})
 			}
 
-			const res2 = res.data
-			if (res2.ok) {
-				showToast.success(res2.msg, {
+			const resvs = res.data;
+			if (resvs.ok2) {
+				showToast.success(resvs.msg2, {
 					duration: 4000,
 					progress: true,
 					position: 'top-right',
@@ -53,7 +54,7 @@ export default function CrearClientePage() {
 					sound: true,
 				})
 			} else {
-				showToast.error(res2.msg, {
+				showToast.error(resvs.msg2, {
 					duration: 4000,
 					progress: true,
 					position: 'top-right',

@@ -67,34 +67,29 @@ export async function POST(request: Request) {
 	const bodyUsed = res.bodyUsed;
 	const headers = res.headers;
 	const ok = res.ok;
-	const body = await res.json().catch(() => ({ error: 'Error al crear cliente' }))
+	const body = await res.json().catch(() => ({ msg: 'Error al crear cliente y obtener información', data: {msg:"Error al crear cliente en Versus y obtener información"} }))
 
 	const respuesta = {
+		msg: body.msg,//"Cliente creado exitosamente",
+		data: body.data,
 		status,
 		statusText,
 		bodyUsed,
 		headers,
 		ok,
-		body
 	}
 	console.log('res body: ',respuesta);
 
 	
 
-	if (!res.ok) {
-		const errorData = bd;
-		return NextResponse.json(
-			{ error: errorData.error || 'Error al crear cliente' },
-			{ status: res.status }
-		);
+	if (res.ok) {
+		return NextResponse.json(respuesta)
+	} else {
+		return NextResponse.json(respuesta, { status: res.status })
+		// const errorData = bd;
+		// return NextResponse.json(
+		// 	{ error: errorData.error || 'Error al crear cliente' },
+		// 	{ status: res.status }
+		// );
 	}
-
-	// const data = bd;
-	return NextResponse.json({
-		msg: "Cliente creado exitosamente",
-		data: respuesta
-		
-	}
-
-	);
 }

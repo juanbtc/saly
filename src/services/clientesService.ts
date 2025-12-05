@@ -89,17 +89,21 @@ export class ClientesService {
 				credentials: 'include',
 				body: JSON.stringify(data),
 			});
+			console.log('response front: ',response);
+			
 
-			if (!response.ok) {
+			/*if (!response.ok) {
 				const errorData = await response.json().catch(() => ({}));
-				throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-			}
+				throw new Error(errorData.error + `HTTP -> error! status: ${response.status}`);
+			}*/
 
 			const result = await response.json();
+			console.log('response body front: ',result);
+			
 
-			if (result.data && typeof result.data === 'object') {
-				return result.data;
-			}
+			// if (result.data && typeof result.data === 'object') {
+			// 	return result.data;
+			// }
 
 			return {
 				msg: result.msg,
